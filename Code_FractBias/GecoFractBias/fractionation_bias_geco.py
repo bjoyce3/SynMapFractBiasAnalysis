@@ -1,10 +1,20 @@
 # coding: utf-8
 
-# In[2]:
-
 """Imports"""
+#Sets matplotlib to not output figures in a window (will cause an error if removed)
 import matplotlib
 matplotlib.use('Agg')
+
+#Specifically for using code on server
+#Allows arguments in command line
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--align", help="File path to SynMap syntenic alignment data output (aligncoords.gcoords file)")
+parser.add_argument("--gff", help="File path to target genome GFF file")
+parser.add_argument("--targetID", help="Target genome CoGe ID number. The target genome is the one with fewer subgenomes. Used to determine which side of the SynMap output file the target genome data exists.")
+#parser.add_argument("--queryID", help="Query genome CoGe ID number. The query genome is the one with more subgenomes. Used to determine which side of the SynMap output file the target genome data exists.")
+parser.add_argument("--output", help="File path to output directory. Specify SynMap directory: 'storage/coge/data/diags' file path.")
+args = parser.parse_args()
 
 #For importing data and parsing data
 from operator import itemgetter
@@ -41,9 +51,14 @@ import matplotlib
 
 
 #For importing data and parsing
-synmap_import_file = '/home/bjoyce3/pinarice/SynMapKsMerge120Sdepth10_Osativa-Acomosus2-1Acomv6.txt'
-gff_import_file = '/home/bjoyce3/pinarice/Ananas_comosus_pineapple_v6.gff'
-d = {}  # initialize dictionary to contain the array of syntenic genome1_chrs, genome1_genes, genome2_chrs, and genome2_genes
+synmap_import_file = args.align
+gff_import_file = args.gff
+
+# initialize dictionary to contain the array of syntenic genome1_chrs, genome1_genes, genome2_chrs, and genome2_genes
+d = {}
+#global variable for gff data structure
+gff_genes = {}  # initializes dictionary for organization of genes on chromosomes within genome1 according to start bp
+
 genus_species = ''
 with open(gff_import_file) as gff_file:
     for line in gff_file:
@@ -52,17 +67,20 @@ with open(gff_import_file) as gff_file:
             species_name = genus_species.replace(' ','_')
             species_name_filter = species_name.translate(None, '(){}[]')
 
-#Parsed data and raw output to csv
-gff_sort_output_file = ("pinarice/ALL_GFF_sorted_"+str(species_name_filter)+ ".txt")
-synmap_dictionary_output_file = ("pinarice/ALL_dictionary_syntenic genes_" +str(species_name_filter)+ ".txt")
-gff_genes = {}  # initializes dictionary for organization of genes on chromosomes within genome1 according to start bp
-fract_bias_raw_output_file = ("pinarice/raw" +str(species_name_filter)+ "output.csv")
+#Create output file path for text and csv: args.output = = storage/coge/data/diags/lowestID/highestID/
+#Parsed data and raw output to csv files
+gff_sort_output_file = (args.output+"gff_sort.txt")
+synmap_dictionary_output_file = (args.output+"synmap_data_structure.txt")
+fract_bias_raw_output_file = (args.output+"fractbias_output.csv")
 
 #Analysis of parsed data
-retention_calc_output_file = ("Window_output_"+str(species_name_filter+".csv"))
+retention_calc_output_file = ("fractbias_sliding_window_output.csv"))
 target_lst = []
 query_lst = []
 
+#Tests genome IDs for target and query genomes passed into program
+
+#Creates a data structure containing the number of target chromosomes and query chromosomes
 def chr_id(input_dict):
     for item in input_dict:
         if not item in target_lst:
@@ -99,19 +117,27 @@ Reads SynMap and GFF CDS files and parse data into columns in array
 print "making synmap data structure"
 
 with open(synmap_import_file, 'r') as f:  # open SynMap file containing syntenic genes
+    synmap_rowcount = 0
     cols = []  # list for parsing columns from SynMap data
     for line in f:  # for loop to parse columns
         new_line = line.replace('||', '\t')  #converts || into tabs for universal delimination
         if line[0] != '#' and line[0] != '\n':  #sorts out columns containing syntenic block information/headings
             cols = new_line.split('\t', )  #splits all syntenic gene pair lines into parsed columns in a list
-            global target_chr
-            global target_gene
-            global query_chr
-            global query_gene
-            target_chr = cols[15]
-            target_gene = str(cols[18])  #puts all genome1_genes with synteny into a list
-            query_chr = str(cols[3])  #puts all genome2_chrs with synteny to genes in genome1 into a list
-            query_gene = str(cols[6])  #puts all genome2_genes with synteny to genes in a genome1 into a list
+            synmap_rowcount += 1
+            if synmap_rowcount == 1:
+                #clean ID subgenome A from the column on left of data
+                ida = cols[2]
+                ida = ida[1:cols[2].index('_')]
+            if args.targetID == ida:
+                target_chr = cols[3]
+                target_gene = str(cols[6]).rstrip('.')  #puts all genome1_genes with synteny into a list
+                query_chr = str(cols[15])  #puts all genome2_chrs with synteny to genes in genome1 into a list
+                query_gene = str(cols[18]).rstrip('.')  #puts all genome2_genes with synteny to genes in a genome1 into a list
+            else:
+                target_chr = cols[15]
+                target_gene = str(cols[18])  #puts all genome1_genes with synteny into a list
+                query_chr = str(cols[3])  #puts all genome2_chrs with synteny to genes in genome1 into a list
+                query_gene = str(cols[6])  #puts all genome2_genes with synteny to genes in a genome1 into a list
 
             if not target_chr in d:
                 d[target_chr] = {}  #initializes the nested dictionary-primary level at genome1_chromosome
@@ -260,8 +286,8 @@ for tchr in windanalysis_input_dict:
 print "finished sliding windows analysis"
                             
 #Sort output_dict for tchr alphanumberic at top level 
-alphanumbsort = lambda k,v: [k, int(v)]
-output_dict = collections.OrderedDict(sorted(output_dict.items(), key=lambda t: alphanumbsort(*re.match(r'([a-zA-Z]+)(\d+)',t[0]).groups())))
+#alphanumbsort = lambda k,v: [k, int(v)]
+#output_dict = collections.OrderedDict(sorted(output_dict.items(), key=lambda t: alphanumbsort(*re.match(r'([a-zA-Z]+)(\d+)',t[0]).groups())))
 
 """#Output processed data to a csv file for downstream analysis
 with open(retention_calc_output_file, 'wb') as csvf:
@@ -334,7 +360,7 @@ for tchr in output_dict:
             ax[-1].legend(output_dict[tchr], loc=1, frameon=False, title="Query Chromosome", fontsize=10)
         import operator
 fig.tight_layout()
-plt.savefig('/home/bjoyce3/pinarice/figure1.png')
+plt.savefig(args.output+"html/"+"fractbias_figure1.png")
 print "finished plotting"
 
 # In[ ]:
