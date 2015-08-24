@@ -11,7 +11,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--align", help="File path to SynMap syntenic alignment data output (aligncoords.gcoords file)")
 parser.add_argument("--gff", help="File path to target genome GFF file")
-parser.add_argument("--targetID", help="Target genome CoGe ID number. The target genome is the one with fewer subgenomes. Used to determine which side of the SynMap output file the target genome data exists.")
+parser.add_argument("--target", help="Target genome CoGe ID number. The target genome is the one with fewer subgenomes. Used to determine which side of the SynMap output file the target genome data exists.")
+parser.add_argument("--windowsize", help="Sets the size of the sliding window for analysis")
 #parser.add_argument("--queryID", help="Query genome CoGe ID number. The query genome is the one with more subgenomes. Used to determine which side of the SynMap output file the target genome data exists.")
 parser.add_argument("--output", help="File path to output directory. Specify SynMap directory: 'storage/coge/data/diags' file path.")
 args = parser.parse_args()
@@ -33,8 +34,6 @@ import collections, re
     #sudo pip uninstall python-dateutil
     #sudo pip install python-dateutil==2.2
 
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np 
 import matplotlib.gridspec as gridspec
@@ -44,8 +43,12 @@ import matplotlib.gridspec as gridspec
 from natsort import natsorted, natsort_key
 import matplotlib
 
+#PATH TO RUN IN DESKTOP
+#Sorghum/Maize comparison
+#python fractionation_bias_geco.py --align /home/bjoyce3/sorghum_maize/Sorghum_maize_synmap_results.txt --gff /home/bjoyce3/sorghum_maize/Sorghum_bicolor_annos1-cds0-id_typename-nu1-upa1-add_chr0.gid6807.gff --target 6807 --windowsize 100 --output /home/bjoyce3/sorghum_maize/
 
-# In[8]:
+#pina/rice comparison
+#python fractionation_bias_geco.py --align /home/bjoyce3/pinarice/SynMapKsMerge120Sdepth10_Osativa-Acomosus2-1Acomv6.txt --gff /home/bjoyce3/pinarice/Ananas_comosus_pineapple_v6.gff --target 25734 --windowsize 100 --output /home/bjoyce3/pinarice
 
 """Methods and Global Variables"""
 
@@ -74,7 +77,7 @@ synmap_dictionary_output_file = (args.output+"synmap_data_structure.txt")
 fract_bias_raw_output_file = (args.output+"fractbias_output.csv")
 
 #Analysis of parsed data
-retention_calc_output_file = ("fractbias_sliding_window_output.csv"))
+retention_calc_output_file = ("fractbias_sliding_window_output.csv")
 target_lst = []
 query_lst = []
 
@@ -128,7 +131,7 @@ with open(synmap_import_file, 'r') as f:  # open SynMap file containing syntenic
                 #clean ID subgenome A from the column on left of data
                 ida = cols[2]
                 ida = ida[1:cols[2].index('_')]
-            if args.targetID == ida:
+            if args.target == ida:
                 target_chr = cols[3]
                 target_gene = str(cols[6]).rstrip('.')  #puts all genome1_genes with synteny into a list
                 query_chr = str(cols[15])  #puts all genome2_chrs with synteny to genes in genome1 into a list
@@ -149,9 +152,6 @@ with open(synmap_import_file, 'r') as f:  # open SynMap file containing syntenic
 print "finished synmap data structure"          
 
 
-# In[ ]:
-
-
 '''Reads GFF from genome1 (target) and parses data'''
 
 print "reading gff file"
@@ -165,14 +165,15 @@ with open(gff_import_file, 'r') as g:  # opens gff file
 
         if new_line[0] != '#' and new_line[0] != '\n':  #selects only lines with CDS information
             gffcols = new_line.split('\t', )  #parses all columns
-            if gffcols[2] == 'mRNA' and 'scaffold' not in gffcols[0]:  #selects only 'mRNA' lines for consideration
+            if gffcols[2] == 'gene' and 'scaffold' not in gffcols[0]:  #selects only 'mRNA' lines for consideration
                 chr = gffcols[0]  #adds genome1_chrs to list
-                gene_name = gffcols[10]  #adds genome1_genes to list
+                gene_name = gffcols[8]
+                gene_name1 = gene_name[3:] #adds genome1_genes to list
                 start = int(gffcols[3])  #adds genome1_gene start bp to list for ordering as integer
                 stop = int(gffcols[4])  #adds genome1_gene stop bp to list ?for ordering? as integer
                 if not chr in gff_genes:
                     gff_genes[chr] = []  #initializes chr list in dictionary if chr does not exist yet
-                gff_genes[chr].append(dict(gene_name=gene_name, start=start, stop=stop))
+                gff_genes[chr].append(dict(gene_name=gene_name1, start=start, stop=stop))
 
 print "finished reading gff"
 
@@ -275,8 +276,8 @@ for tchr in windanalysis_input_dict:
             output_dict[tchr][qchr] = {}  #initializes first nesting in dictionary-second level at genome1_genes
 
         try:
-            if (int(len(windanalysis_input_dict[tchr][qchr]))) >= 100:
-                for each in window(windanalysis_input_dict[tchr][qchr], 100):
+            if (int(len(windanalysis_input_dict[tchr][qchr]))) >= args.windowsize:
+                for each in window(windanalysis_input_dict[tchr][qchr], args.windowsize):
                     counter += 1
                     data_output2 = sum(each)
                     output_dict[tchr][qchr][counter] = data_output2                       
@@ -310,8 +311,8 @@ with open(retention_calc_output_file, 'wb') as csvf:
 
 # In[ ]:
 print "Starting up plotting library"
-import matplotlib.pyplot as plt
-import numpy as np
+
+
 
 #define figure size, column layout, grid layout
 figsize = (18 , 60)
@@ -356,9 +357,10 @@ for tchr in output_dict:
         ax[-1].set_title(label='Target Chromosome: '+species_name_filter+" "+ tchr, fontweight='bold', fontsize=14)
         ax[-1].set_xlabel('Window Iteration', fontsize=12, fontweight='bold')
         ax[-1].set_ylabel('% Retention', fontsize=12, fontweight='bold')
+        print (max(output_dict[tchr][qchr].itervalues()))
         if (max(output_dict[tchr][qchr].itervalues()))>0:
             ax[-1].legend(output_dict[tchr], loc=1, frameon=False, title="Query Chromosome", fontsize=10)
-        import operator
+
 fig.tight_layout()
 plt.savefig(args.output+"html/"+"fractbias_figure1.png")
 print "finished plotting"
