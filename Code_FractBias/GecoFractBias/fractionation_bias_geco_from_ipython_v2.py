@@ -368,22 +368,20 @@ for tchr in output_dict:
         #print output_dict[tchr][qchr]
         if (max(output_dict[tchr][qchr].itervalues()))>0:
             x = output_dict[tchr][qchr].keys()
-            y = output_dict[tchr][qchr].values()    
+            y = output_dict[tchr][qchr].values()
+            ax[-1].spines["top"].set_visible(False)
+            ax[-1].spines["right"].set_visible(False)
+            ax[-1].get_xaxis().tick_bottom()
+            ax[-1].get_yaxis().tick_left()
+            ax[-1].plot(x, y, color=tableau20[count], lw=2)
+            ax[-1].set_title(label='Target Chromosome: '+species_name_filter+" "+ tchr, fontweight='bold', fontsize=14)
+            ax[-1].set_xlabel('Window Iteration', fontsize=12, fontweight='bold')
+            ax[-1].set_ylabel('Retention (%)', fontsize=12, fontweight='bold')
+            ax[-1].legend(output_dict[tchr], loc=1, frameon=False, title="Query Chromosome", fontsize=10)
         else:
             continue
-        ax[-1].spines["top"].set_visible(False)
-        ax[-1].spines["right"].set_visible(False)
-        ax[-1].get_xaxis().tick_bottom()
-        ax[-1].get_yaxis().tick_left()
-        ax[-1].plot(x, y, color=tableau20[count], lw=2)
-        ax[-1].set_title(label='Target Chromosome: '+species_name_filter+" "+ tchr, fontweight='bold', fontsize=14)
-        ax[-1].set_xlabel('Window Iteration', fontsize=12, fontweight='bold')
-        ax[-1].set_ylabel('Retention (%)', fontsize=12, fontweight='bold')
-        if (max(output_dict[tchr][qchr].itervalues()))>0:
-            ax[-1].legend(output_dict[tchr], loc=1, frameon=False, title="Query Chromosome", fontsize=10)
-
 fig.tight_layout()
-#plt.savefig(args.output+"html/"+"fractbias_figure1.png") #<--------
+plt.savefig(args.output+"html/"+"fractbias_figure1.png") #<--------
 
 t6 = datetime.now()
 
