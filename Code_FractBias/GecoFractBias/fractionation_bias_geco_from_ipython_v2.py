@@ -9,7 +9,7 @@ matplotlib.use('Agg')
 #Allows arguments in command line
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument("--align", help="File path to SynMap syntenic alignment data output (aligncoords.gcoords.ks file)")
+parser.add_argument("--align", help="File path to SynMap syntenic alignment data output (aligncoords.gcoords file)")
 parser.add_argument("--gff", help="File path to target genome GFF file")
 parser.add_argument("--target", help="Target genome CoGe ID number. The target genome is the one with fewer subgenomes. Used to determine which side of the SynMap output file the target genome data exists.")
 parser.add_argument("--windowsize", help="Sets the size of the sliding window for analysis")
