@@ -220,7 +220,7 @@ with open(synmap_import_file, 'r') as f:  # open SynMap file containing syntenic
                 ida = cols[0]
                 ida = ida[1:cols[0].index('_')]
             #Determines which are target and query genes                
-            if args_target == ida:
+            if args.target == ida:
                 target_chr = cols[1]
                 if any(target_chr in s for s in target_api_chrs_final):
                     target_gene = str(cols[7]) #.rsplit(".", 1)[0]  #puts all genome1_genes with synteny into a list
@@ -274,12 +274,11 @@ with open(gff_import_file, 'r') as g:  # opens gff file
         new_line = new_line.replace('Name=', '')  #strips Name= off gene_name in gff file from CoGe
         if new_line[0] != '#' and new_line[0] != '\n':  #selects only lines with CDS information
             gffcols = new_line.split('\t', )  #parses all columns
-            if any(gffcols[0] in s for s in target_api_chrs_final) and (gffcols[2] == 'CDS'):  #selects only 'CDS' lines for consideration
+            if any (gffcols[0] in s for s in target_api_chrs_final) and (gffcols[2] == 'CDS'):  #selects only 'CDS' lines for consideration
                 chr = gffcols[0]  #adds genome1_chrs to list
                 if not chr in gff_genes_target:
                     gff_genes_target[chr] = []  #initializes chr list in dictionary if chr does not exist yet
-                gene_name = str(gffcols[13])  #.rsplit(".", 1)[0]
-                #gene_name = gene_name.rsplit(".", 1)[0]
+                gene_name = str(gffcols[-1])  
                 gene_name = gene_name.rstrip("\n")
                 gene_name1 = gene_name[9:] #adds targetgenome_genes to list and removes the "ID=" added by CoGe
                 start = int(gffcols[3])  #adds targetgenome_gene start bp to list for ordering as integer
@@ -536,7 +535,6 @@ for i in range(len(tableau20)):
 print "setting palette"
 current_palette = sns.color_palette("Set2", 40)
 
-
 #tableau20
 print "Starting to plot figure"
 
@@ -576,10 +574,11 @@ for tchr in listofchrgraph:
         except ValueError:
             continue
 
+
 fig.subplots_adjust(wspace=0.45, hspace=0.6)
 plt.savefig(args.output+"/html/"+"fractbias_figure-" + "-TarID" + str(args.target) + "-TarChrNum" + str(args.numtargetchr) + "-SynDep" + str(args.syndepth) + \
 "-QueryID" + str(args.query) + "-QueryChrNum" + str(args.numquerychr) + "-AllGene" + str(args.allgenes) + "-RmRnd" + str(args.remove_random_unknown) + "-WindSize" \
-+ str(args.windowsize) + ".png", transparent=True) 
++ str(args.windowsize) + ".png", transparent=True, bbox_inches='tight') 
 
 t6 = datetime.now()
 
