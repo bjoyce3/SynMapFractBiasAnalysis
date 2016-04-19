@@ -2,9 +2,9 @@
 Fractionation bias analysis tool for investigating whole genome duplication gene loss. 
 
 ##Explanation of versions on GitHub repo
-1. iPythonFractBias
+1. iPythonFractBias  
   A version of FractBias that can be used in an interactive iPython Jupyter Notebook (http://ipython.org/notebook.html).
-2. WebFractBias
+2. WebFractBias  
   The version of FractBias that includes arguements so that a web-based platform can pass variables to complete analysis. This version is installed on the CoGe (Comparative Genomics) platform here: https://genomevolution.org/CoGe/SynMap.pl . It can be run using the SynMap tool [1].
 
 ##Scientific Summary
