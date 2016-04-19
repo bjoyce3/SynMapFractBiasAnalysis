@@ -13,11 +13,7 @@ Following polyploidy events, genomes undergo massive reduction in gene content t
 ##Notes
 1. Docuementation for using the web-based SynMap tool can be found here: https://genomevolution.org/wiki/index.php/SynMap
 2. Documentation for using FractBias specifically can be found here: https://genomevolution.org/wiki/index.php/FractBias 
-3. Important variables to set:
-  1. iPythonFractBias
-  *Numtargetchrs
-  2. WebFractBias
-4. 
+3. The SynMap Syntenic Depth option must be set for FractBias to work
 
 ##Publications
 1. Lyons,E. et al. (2008) The value of nonmodel genomes and an example using SynMap within CoGe to dissect the hexaploidy that predates the ro-sids. Trop. Plant Biol., 1, 181–190
