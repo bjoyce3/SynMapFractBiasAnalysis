@@ -25,7 +25,7 @@
 2. After installation, open a terminal (Mac) or the CMD prompt (Windows)
 3. Navigate to the CommandLineFractBias directory
 4. Run the code
-python fractionation_bias.py --align --gff --target --windowsize --query --output --allgenes --numtargetchr --numquerychr --remove_random_unknown --syndepth
+python fractionation_bias.py -align -gff -target -windowsize -query -output -allgenes -numtargetchr -numquerychr -remove_random_unknown -syndepth
 
 ##Explaination of fractionation_bias.py arguments in command
 1. align = include the path to the SynMap DAGCHAINER output file saved previously as "path/to/SynMapoutput"
