@@ -19,10 +19,15 @@
   5. Download the GFF file for the target genome
     * Select the genome with the lower syntenic depth (a.k.a. the target genome) and bring up the GenomeInfo page
     * Under the Tools section in GenomeInfo, select Download: GFF to move the file to your local computer
+2. Save all of the files to a folder in the SynMapFractBiasAnalysis folder
 
 ##Running the Python 2.7 fractionation_bias.py script
 1. Download and install Python 2.7 here: https://www.python.org/downloads/
 2. After installation, open a terminal (Mac) or the CMD prompt (Windows)
+3. Install the dependencies required for running FractBias
+  1. matplotlib
+  2. seaborn
+  3. natsort
 3. Navigate to the CommandLineFractBias directory
 4. Run the code
 python fractionation_bias.py --align --gff --target --windowsize --query --output --allgenes --numtargetchr --numquerychr --remove_random_unknown --syndepth
