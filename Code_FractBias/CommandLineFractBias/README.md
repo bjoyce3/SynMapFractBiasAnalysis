@@ -48,4 +48,4 @@ python fractionation_bias.py --align --gff --target --windowsize --query --outpu
 1. Pull down/clone the whole FractBias repo to your Desktop and install Python 2.7 as above
 2. Open a terminal and navigate to the SynMapFractBiasAnalysis/Code_FractBias/CommandLineFractBias folder
 3. Run the following command
-python fractionation_bias.py  --gff ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_falciparum_3D7_gid9636.gff --align ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_SynMap_output.txt --numquerychr 20 --numtargetchr 20 --remove_random_unknown True --query 4173 --target 9636 --windowsize 100 --allgenes False --output ~/Desktop/SynMapFractBiasAnalysis/Example_data
+python fractionation_bias.py  --gff ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_falciparum_3D7_gid9636.gff --align ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_SynMap_output.txt --numquerychr 14 --numtargetchr 14 --remove_random_unknown True --query 19106 --target 9636 --windowsize 100 --allgenes False --output ~/Desktop/SynMapFractBiasAnalysis/Example_data
