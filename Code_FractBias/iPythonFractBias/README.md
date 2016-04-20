@@ -39,3 +39,28 @@
     * args_remove_random_unknown = Set to either True or False (Boolean variable), if True then any chromosomes with random or unknown in their names will be removed from consideration
   3. Set paths for each of the output files in the Methods and Global Variables section
 3. Run all cells and await figure output at the bottom cell
+
+##Running the Plasmodium Example Data
+1. Pull down/clone the whole FractBias repo to your Desktop and install Python 2.7 as above
+2. Download the dependencies for FractBias
+  1. matplotlib
+  2. seaborn
+  3. natsort
+3. Open the iPython notebook file Fractionation_Bias_IPython_Notebook_Jupyter4.ipynb
+4. Change the following variables in the iPython notebook FractBias program
+  1. Under Methods and Global Variables, set the paths to downloaded data
+    * synmap_import_file = "~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_SynMap_output.txt"
+    * gff_target_import_file = "~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_falciparum_3D7_gid9636.gff"
+    * gff_sort_output_file = ("~/Desktop/SynMapFractBiasAnalysis/Example_data/ALL_GFF_sorted_"+str(species_name_filter)+ ".txt")
+    * synmap_dictionary_output_file = ("~/Desktop/SynMapFractBiasAnalysis/Example_data/ALL_dictionary_syntenic genes_" +str(species_name_filter)+ ".txt")
+    * fract_bias_raw_output_file = ("~/Desktop/SynMapFractBiasAnalysis/Example_data/ALL_fractbias_" +str(species_name_filter)+ "output.csv")
+    * retention_calc_output_file = ("~/Desktop/SynMapFractBiasAnalysis/Example_data/Window_output_"+str(species_name_filter+".csv"))
+  2. Under User Settings, include all of the user set arguments
+    * args_target = 9636
+    * args_query = 19106
+    * args_all_genes = False
+    * window_size = 100
+    * args_numtargetchr = 14
+    * args_numquerychr = 14
+    * args_remove_random_unknown = True
+python fractionation_bias.py  --gff  --align  --numquerychr 14 --numtargetchr 14 --remove_random_unknown True --query 19106 --target 9636 --windowsize 100 --allgenes False --output ~/Desktop/SynMapFractBiasAnalysis/Example_data
