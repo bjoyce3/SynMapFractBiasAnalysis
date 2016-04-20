@@ -15,6 +15,7 @@ Following polyploidy events, genomes undergo massive reduction in gene content t
 2. Documentation for using FractBias specifically can be found here: https://genomevolution.org/wiki/index.php/FractBias 
 3. The SynMap Syntenic Depth option must be set for FractBias to work
 4. The example data included can be run either through iPython notebooks or the command line
+5. Detailed instructions for running the example data can be found in the README.md file in either the iPythonFractBias or CommandLineFractBias repo folder
 
 ##Publications
 1. Lyons,E. et al. (2008) The value of nonmodel genomes and an example using SynMap within CoGe to dissect the hexaploidy that predates the rosids. Trop. Plant Biol., 1, 181–190
