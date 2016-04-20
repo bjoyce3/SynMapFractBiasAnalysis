@@ -16,4 +16,4 @@ Following polyploidy events, genomes undergo massive reduction in gene content t
 3. The SynMap Syntenic Depth option must be set for FractBias to work
 
 ##Publications
-1. Lyons,E. et al. (2008) The value of nonmodel genomes and an example using SynMap within CoGe to dissect the hexaploidy that predates the ro-sids. Trop. Plant Biol., 1, 181–190
+1. Lyons,E. et al. (2008) The value of nonmodel genomes and an example using SynMap within CoGe to dissect the hexaploidy that predates the rosids. Trop. Plant Biol., 1, 181–190
