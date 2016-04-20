@@ -14,7 +14,8 @@ Following polyploidy events, genomes undergo massive reduction in gene content t
 1. Docuementation for using the web-based SynMap tool can be found here: https://genomevolution.org/wiki/index.php/SynMap
 2. Documentation for using FractBias specifically can be found here: https://genomevolution.org/wiki/index.php/FractBias 
 3. The SynMap Syntenic Depth option must be set for FractBias to work
-4. The example data included can be run either through iPython notebooks or the command line
+4. Though FractBias was originally designed to investigate genome fractionation after polyploid events, it can also be used in 1:1 comparisons to see chromosome rearrangements between species
+5. The example data included can be run either through iPython notebooks or the command line
 5. Detailed instructions for running the example data can be found in the README.md file in either the iPythonFractBias or CommandLineFractBias repo folder
 
 ##Publications
