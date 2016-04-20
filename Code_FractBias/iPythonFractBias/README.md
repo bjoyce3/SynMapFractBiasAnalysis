@@ -13,6 +13,12 @@
 ##Setting the variables
 1. Download the necessary data files from CoGe (https://genomevolution.org/coge/SynMap.pl)
   1. Run a SynMap comparison with the Syntenic Depth option (under Analysis Options) set
+    * Select two genomes to compare by typing the scientific name of the organism into the two search bars
+    * Select the Analysis options tab
+    * Select Quota Align on the drop down menu in the Syntenic Depth section
+    * Input the syntenic depth ratio of the two genomes (e.g. 1 to 2 if one genome has experienced a whole genome duplication)
+    * Run the SynMap comparison by pressing the Generate SynMap button
+    * Detailed documentation on how to run SynMap can be found here: https://genomevolution.org/wiki/index.php/SynMap
   2. At the bottom of the SynMap figure, click the click here to see more... link next to "Links and Downloads"
   3. In the Results section, select "DAGCHAINER output in genomic coordinates"
   4. Select all and copy the data into a tab separated value (.tsv) file
