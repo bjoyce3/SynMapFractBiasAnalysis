@@ -22,15 +22,14 @@
 2. Save all of the files to a folder in the SynMapFractBiasAnalysis folder
 
 ##Running the Python 2.7 fractionation_bias.py script
-1. Download and install Python 2.7 here: https://www.python.org/downloads/
+1. If you don't already have it, download and install __Python 2.7__ here: https://www.python.org/downloads/
 2. After installation, open a terminal (Mac) or the CMD prompt (Windows)
 3. Install the dependencies required for running FractBias
-  1. matplotlib
-  2. seaborn
-  3. natsort
+  1. natsort
+  2. jwt
 3. Navigate to the CommandLineFractBias directory
 4. Run the code
-python fractionation_bias.py --align --gff --target --windowsize --query --output --allgenes --numtargetchr --numquerychr --remove_random_unknown --syndepth
+python fractionation_bias.py --align --gff --target --windowsize --query --output --allgenes --numtargetchr --numquerychr --remove_random_unknown --syndepth --apiurl --user
 
 ##Explaination of fractionation_bias.py arguments in command
 1. align = include the path to the SynMap DAGCHAINER output file saved previously as "path/to/SynMapoutput"
@@ -43,9 +42,11 @@ python fractionation_bias.py --align --gff --target --windowsize --query --outpu
 8. numtargetchr = Set to the number of target genome chromosomes to use in the analysis as an integer, e.g. 20
 9. numquerychr = Set to the number of query genome chromosomes to use in the analysis as an integer, e.g. 20
 10. remove_random_unknown = Set to either True or False (Boolean variable), if True then any chromosomes with random or unknown in their names will be removed from consideration
+11. apiurl = url for the COGE API you are using (usually http://www.genomevolution.org/coge/api/v1/genomes)
+12. user = CoGe Username (register at www.genomevolution.org)
 
 ##Running the Plasmodium Example Data
 1. Pull down/clone the whole FractBias repo to your Desktop and install Python 2.7 as above
 2. Open a terminal and navigate to the SynMapFractBiasAnalysis/Code_FractBias/CommandLineFractBias folder
 3. Run the following command
-python fractionation_bias.py  --gff ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_falciparum_3D7_gid9636.gff --align ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_SynMap_output.txt --numquerychr 14 --numtargetchr 14 --remove_random_unknown True --query 19106 --target 9636 --windowsize 100 --allgenes False --output ~/Desktop/SynMapFractBiasAnalysis/Example_data
+python fractionation_bias.py  --gff ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_falciparum_3D7_gid9636.gff --align ~/Desktop/SynMapFractBiasAnalysis/Example_data/Plasmodium_SynMap_output.txt --numquerychr 14 --numtargetchr 14 --remove_random_unknown True --query 19106 --target 9636 --windowsize 100 --allgenes False --output ~/Desktop/SynMapFractBiasAnalysis/Example_data --prefix demo_analysis --user <your_username> --apiurl https://genomevolution.org/coge/api/v1/genomes 
