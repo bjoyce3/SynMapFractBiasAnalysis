@@ -1,5 +1,5 @@
 """Imports"""
-
+#Notes for GitHub demo
 
 #For importing data and parsing data
 from operator import itemgetter
