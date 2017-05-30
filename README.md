@@ -18,6 +18,6 @@ Following polyploidy events, genomes undergo massive reduction in gene content t
 5. The example data included can be run either through iPython notebooks or the command line
 5. Detailed instructions for running the example data can be found in the README.md file in either the iPythonFractBias or CommandLineFractBias repo folder
 
-## Publications
+## References
 1. Lyons,E. et al. (2008) The value of nonmodel genomes and an example using SynMap within CoGe to dissect the hexaploidy that predates the rosids. Trop. Plant Biol., 1, 181–190
 2. Joyce, B.L. Haug-Baltzell, A. Davey, S., Bomhoff, M., Schnable, J.C. Lyons, E. (2016) FractBias: a graphical tool for assessing fractionation bias following polyploidy. Bioinformatics DOI: https://doi.org/10.1093/bioinformatics/btw666.
