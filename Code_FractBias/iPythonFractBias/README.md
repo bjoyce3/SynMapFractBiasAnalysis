@@ -1,16 +1,16 @@
-#Using the iPythonFractBias Code
+# Using the iPythonFractBias Code
 
-##Installing iPython notebooks
+## Installing iPython notebooks
 1. Navigate to the Jupyter Notebooks website (http://jupyter.readthedocs.org/en/latest/install.html)
 2. Follow the directions outlined for downloading and installation of Python 2.7
 
-##Opening the iPython notebook file
+## Opening the iPython notebook file
 1. Open a terminal (Mac) or open the CMD prompt (Windows)
 2. Type ipython notebook
 3. This will open a browser
 4. Navigate to and open the iPythonFractBias.ipynb file
 
-##Setting the variables
+## Setting the variables
 1. Download the necessary data files from CoGe (https://genomevolution.org/coge/SynMap.pl)
   1. Run a SynMap comparison with the Syntenic Depth option (under Analysis Options) set
     * Select two genomes to compare by typing the scientific name of the organism into the two search bars
@@ -40,7 +40,7 @@
   3. Set paths for each of the output files in the Methods and Global Variables section
 3. Run all cells and await figure output at the bottom cell
 
-##Running the Plasmodium Example Data
+## Running the Plasmodium Example Data
 1. Pull down/clone the whole FractBias repo to your Desktop and install Python 2.7 as above
 2. Download the dependencies for FractBias
   1. matplotlib
