@@ -1,10 +1,10 @@
-#Using the Command Line FractBias Code
+# Using the Command Line FractBias Code
 
-##Download fractionation_bias.py script to a local directory
+## Download fractionation_bias.py script to a local directory
 1. Download the git repo by bringing up a terminal (Mac) or CMD prompt (Windows)
 2. Type command: git clone https://github.com/bjoyce3/SynMapFractBiasAnalysis.git
 
-##Downloading data for an analysis of interest
+## Downloading data for an analysis of interest
 1. Download the necessary data files from CoGe (https://genomevolution.org/coge/SynMap.pl)
   1. Run a SynMap comparison with the Syntenic Depth option (under Analysis Options) set
     * Select two genomes to compare by typing the scientific name of the organism into the two search bars
@@ -21,7 +21,7 @@
     * Under the Tools section in GenomeInfo, select Download: GFF to move the file to your local computer
 2. Save all of the files to a folder in the SynMapFractBiasAnalysis folder
 
-##Running the Python 2.7 fractionation_bias.py script
+## Running the Python 2.7 fractionation_bias.py script
 1. If you don't already have it, download and install __Python 2.7__ here: https://www.python.org/downloads/
 2. After installation, open a terminal (Mac) or the CMD prompt (Windows)
 3. Install the dependencies required for running FractBias
@@ -31,7 +31,7 @@
 4. Run the code
 python fractionation_bias.py --align --gff --target --windowsize --query --output --allgenes --numtargetchr --numquerychr --remove_random_unknown --syndepth --apiurl --user
 
-##Explaination of fractionation_bias.py arguments in command
+## Explaination of fractionation_bias.py arguments in command
 1. align = include the path to the SynMap DAGCHAINER output file saved previously as "path/to/SynMapoutput"
 2. gff = include the path to the target genome GFF saved previously as "path/to/GFFfile"
 3. target = Set the genomeID of the genome with the lower syntenic depth
@@ -45,7 +45,7 @@ python fractionation_bias.py --align --gff --target --windowsize --query --outpu
 11. apiurl = url for the COGE API you are using (usually http://www.genomevolution.org/coge/api/v1/genomes)
 12. user = CoGe Username (register at www.genomevolution.org)
 
-##Running the Plasmodium Example Data
+## Running the Plasmodium Example Data
 1. Pull down/clone the whole FractBias repo to your Desktop and install Python 2.7 as above
 2. Open a terminal and navigate to the SynMapFractBiasAnalysis/Code_FractBias/CommandLineFractBias folder
 3. Run the following command
